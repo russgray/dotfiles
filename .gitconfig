@@ -1,0 +1,30 @@
+[user]
+        name = Russell Gray
+[core]
+        autocrlf = true
+        whitespace = cr-at-eol
+[push]
+        default = simple
+[apply]
+        whitespace = nowarn
+[merge]
+        tool = gvimdiff
+[diff]
+        tool = gvimdiff
+[mergetool "gvimdiff3"]
+        cmd = gvim -f -d -c \"set lines=999 columns=999\" \"$REMOTE\" \"$LOCAL\"
+[alias]
+        aa = "!git add . && git add -u && git status"
+        br = branch 
+        cb = !git branch | grep ^* | cut -d' ' -f2
+        ci = commit
+        cl = clone
+        co = checkout
+        dc = diff --cached
+        diff = diff --word-diff
+        l = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
+        la = "!git config -l | grep alias | cut -c 7-"
+        lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        ll = log --pretty=format:'%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]' --decorate --numstat
+        sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4,5 | xargs git show-branch $(git cb)
+        st = status -s
