@@ -9,12 +9,11 @@
     whitespace = nowarn
 [merge]
     tool = gvimdiff
+    conflictstyle = diff3
     stat = true
 [diff]
     renames = copies
     tool = gvimdiff
-[mergetool "gvimdiff3"]
-    cmd = gvim -f -c \"wincmd J\" -d \"$MERGED\" \"$REMOTE\" \"$BASE\" \"$LOCAL\"
 [alias]
     aa = "!git add . && git add -u && git status"
     authors = !git log --pretty=format:%aN | sort | uniq -c | sort -rn
@@ -41,7 +40,6 @@
     st = status -s
     url = ls-remote --get-url origin
     week = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" --since='last thursday' --author='Russell Gray'
-
 [mergetool]
     keepBackup = false
 [rerere]
