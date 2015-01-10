@@ -27,12 +27,17 @@
 " }}}
 
 " vundle {{{
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set rtp+=~/.vim/bundle/vundle/
+" call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 Bundle 'gmarik/vundle'
 
 Bundle 'fholgado/minibufexpl.vim'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'vim-scripts/taglist.vim'
+Bundle 'altercation/vim-colors-solarized'
 
 " }}}
 " UI {{{
