@@ -33,6 +33,7 @@
     mb = !git merge-base `git cb`
     me = log --date=relative --pretty=medium --author='Russell Gray' --stat
     pn = push -u origin HEAD
+    promote = merge --no-ff
     req = !sh -c 'CI=$(git merge-base `git cb` $0) && git --no-pager shortlog $CI.. && git --no-pager diff -M --stat --summary $CI'
     s = status
     sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4,5 | xargs git show-branch $(git cb)
@@ -40,6 +41,12 @@
     st = status -s
     url = ls-remote --get-url origin
     week = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" --since='last thursday' --author='Russell Gray'
+
+    # gitflow helpers
+    hotfix = !sh -c 'git fetch && git checkout -b hotfix-$0 origin/master'
+    feature = !sh -c 'git fetch && git checkout -b feature-$0 origin/develop'
+    prep-release = !sh -c 'git fetch && git checkout -b release-$0 origin/develop'
+
 [mergetool]
     keepBackup = false
 [rerere]
