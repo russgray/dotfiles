@@ -30,10 +30,10 @@
     la = "!git config -l | grep alias | cut -c 7-"
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
     ll = log --pretty=format:'%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]' --decorate --numstat
+    # finds merge base from current branch to specified branch, e.g. 'git mb master'
     mb = !git merge-base `git cb`
     me = log --date=relative --pretty=medium --author='Russell Gray' --stat
     pn = push -u origin HEAD
-    promote = merge --no-ff
     req = !sh -c 'CI=$(git merge-base `git cb` $0) && git --no-pager shortlog $CI.. && git --no-pager diff -M --stat --summary $CI'
     s = status
     sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4,5 | xargs git show-branch $(git cb)
@@ -43,9 +43,18 @@
     week = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" --since='last thursday' --author='Russell Gray'
 
     # gitflow helpers
-    hotfix = !sh -c 'git fetch && git checkout -b hotfix-$0 origin/master'
-    feature = !sh -c 'git fetch && git checkout -b feature-$0 origin/develop'
-    prep-release = !sh -c 'git fetch && git checkout -b release-$0 origin/develop'
+    hotfix = !sh -c 'git fetch && git checkout --no-track -b hotfix-$0 origin/master'
+    feature = !sh -c 'git fetch && git checkout --no-track -b feature-$0 origin/develop'
+    prep-release = !sh -c 'git fetch && git checkout --no-track -b release-$0 origin/develop'
+    promote = merge --no-ff --edit
+
+    # see https://developer.atlassian.com/blog/2015/01/a-better-pull-request/#comment-1811819137
+    # this calls merge-tree with the two specified heads, plus their merge base
+    # example: 'git preview-merge myfeature develop' does three-way merge from feature branch to
+    # current head of develop and also the point on develop that the feature branch came from
+    preview-merge = !sh -c 'git merge-tree $(git merge-base $0 $1) $0 $1'
+    # shortcut for previewing a merge to master
+    pm = !git fetch && git preview-merge origin/master HEAD
 
 [mergetool]
     keepBackup = false
