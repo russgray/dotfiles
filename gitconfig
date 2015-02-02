@@ -26,10 +26,19 @@
     dc = describe --contains
     diffc = diff --cached
     diffw = diff --word-diff
-    l = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
     la = "!git config -l | grep alias | cut -c 7-"
+
+    # logging aliases
+    l = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
     ll = log --pretty=format:'%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]' --decorate --numstat
+
+    # more logging aliases from http://stackoverflow.com/a/22875140
+    #quick look at all repo
+    loggsa = log --color --date-order --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d %Cgreen(%cr)%Creset' --decorate --simplify-by-decoration --all
+    #quick look at active branch (or refs pointed)
+    loggs  = log --color --date-order --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --decorate --simplify-by-decoration
+
     # finds merge base from current branch to specified branch, e.g. 'git mb master'
     mb = !git merge-base `git cb`
     me = log --date=relative --pretty=medium --author='Russell Gray' --stat
