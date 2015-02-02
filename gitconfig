@@ -52,8 +52,10 @@
     week = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" --since='last thursday' --author='Russell Gray'
 
     # gitflow helpers
+    # hotfix always taken from master!
     hotfix = !sh -c 'git fetch && git checkout --no-track -b hotfix-$0 origin/master'
-    feature = !sh -c 'git fetch && git checkout --no-track -b feature-$0 origin/develop'
+    feature = !sh -c 'git checkout --no-track -b feature-$0 origin/develop'
+    # release branch always created from develop!
     prep-release = !sh -c 'git fetch && git checkout --no-track -b release-$0 origin/develop'
     promote = merge --no-ff --edit
 
