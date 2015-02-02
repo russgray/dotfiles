@@ -1,5 +1,22 @@
+" Setup vundle first {{{
+    set nocompatible
+    filetype off
+
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+
+    Plugin 'gmarik/Vundle.vim'
+
+    Plugin 'tpope/vim-fugitive'
+    Plugin 'fholgado/minibufexpl.vim'
+    Plugin 'airblade/vim-gitgutter'
+    Plugin 'vim-scripts/taglist.vim'
+    Plugin 'altercation/vim-colors-solarized'
+
+    call vundle#end()
+" }}}
+
 " Basics {{{
-    set nocompatible                                    " turn off Vi compatibility
     set background=dark                                 " darkness
     set backspace=indent,eol,start                      " set backspace key behaviour
     set nobackup                                        " turn off auto backup
@@ -21,25 +38,11 @@
     filetype plugin indent on
     set autoindent                                      " keep indent on new line
 
-    set clipboard+=unnamed
+    "set clipboard+=unnamed
     set noerrorbells
     set hidden                                          " allow change buffers without saving
 " }}}
 
-" vundle {{{
-" set rtp+=~/.vim/bundle/vundle/
-" call vundle#rc()
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Bundle 'gmarik/vundle'
-
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'altercation/vim-colors-solarized'
-
-" }}}
 " UI {{{
     set number
     set cursorcolumn
