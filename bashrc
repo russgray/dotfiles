@@ -22,7 +22,6 @@ alias pg='ps aux | grep'                                # requires an argument
 alias un='tar -zxvf'
 alias du1='du -h --max-depth=1'
 alias da='date "+%Y-%m-%d %A    %T %Z"'
-alias la='cat ~/.bashrc | grep ^alias'
 alias hist='history | grep $1'                          # requires an argument
 alias grso='git remote show origin'
 alias grpo='git remote prune origin'
