@@ -26,6 +26,8 @@
     dc = describe --contains
     diffc = diff --cached
     diffw = diff --word-diff
+    div = divergence # requires https://raw.githubusercontent.com/garybernhardt/dotfiles/HEAD/bin/git-divergence on PATH
+    fa = fetch --all
     la = "!git config -l | grep alias | cut -c 7-"
 
     # logging aliases
