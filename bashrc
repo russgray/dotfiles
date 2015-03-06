@@ -28,3 +28,10 @@ alias grpo='git remote prune origin'
 alias pcat='pygmentize -O style=native -g'
 alias ll='ls -Al'
 alias serve='python -m SimpleHTTPServer'
+
+# vagrant aliases
+alias vl='vagrant list'
+alias vh='vagrant halt'
+alias vu='vagrant up'
+alias vs='vagrant ssh'
+alias vus='vagrant up && vagrant ssh'
