@@ -1,0 +1,3 @@
+*.sh eol=lf
+*rc eol=lf
+gitconfig eol=lf

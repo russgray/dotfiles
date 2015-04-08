@@ -1,6 +1,5 @@
-export HISTFILESIZE=3000 # the bash history should save 3000 commands
-export HISTCONTROL=ignoredups #don't put duplicate lines in the history.
-export TERM=msys
+export HISTFILESIZE=3000      # the bash history should save 3000 commands
+export HISTCONTROL=ignoredups # don't put duplicate lines in the history.
 
 shopt -s histappend
 PROMPT_COMMAND='history -a; history -n'
