@@ -43,7 +43,7 @@
 
     # finds merge base from current branch to specified branch, e.g. 'git mb master'
     mb = !git merge-base `git cb`
-    me = log --date=relative --pretty=medium --author='Russell Gray' --stat
+    me = log --date=relative --pretty=medium --author='Russell Gray' --author='russgray' --stat
     pn = push -u origin HEAD
     req = !sh -c 'CI=$(git merge-base `git cb` $0) && git --no-pager shortlog $CI.. && git --no-pager diff -M --stat --summary $CI'
     s = status
