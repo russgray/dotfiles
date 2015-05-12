@@ -25,4 +25,4 @@ popd
 # set up vundle
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 curl -s https://raw.githubusercontent.com/russgray/dotfiles/master/vimrc -o ~/.vimrc
-/usr/local/bin/vim +PluginInstall +qall
+/usr/local/bin/vim +PluginInstall +qall 2&> /dev/null
