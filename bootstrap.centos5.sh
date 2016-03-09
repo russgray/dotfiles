@@ -25,6 +25,10 @@ cp dotfiles/screenrc ~/.screenrc
 if [ ! -f ~/.bashrc ]; then
     cat << BASHRC > ~/.bashrc
 source ~/dotfiles/bashrc
+
+[ -f /vagrant/deploy-helpers.sh ] && source /vagrant/deploy-helpers.sh
+[ -f /vagrant/pkbaliases.sh ] && source /vagrant/pkbaliases.sh
+
 BASHRC
 fi
 
@@ -52,4 +56,32 @@ if [ ! -d ".vim/bundle/" ]; then
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     #curl -s https://raw.githubusercontent.com/russgray/dotfiles/master/vimrc -o ~/.vimrc
     /usr/local/bin/vim +PluginInstall +qall 2&> /dev/null
+fi
+
+# set up multitail
+if [ ! -f ~/.multitailrc ]; then
+    cat << MULTITAILRC > ~/.multitailrc
+colorscheme:sql
+cs_re_s:green:PREPARE:  (select.*)\]
+cs_re_s:green:PREPARE:  (SELECT.*)\]
+cs_re_s:cyan,,bold:PREPARE:  (update.*)\]
+cs_re_s:cyan,,bold:PREPARE:  (UPDATE.*)\]
+cs_re_s:magenta:PREPARE:  (insert.*)\]
+cs_re_s:magenta:PREPARE:  (INSERT.*)\]
+cs_re_s:red:PREPARE:  (delete.*)\]
+cs_re_s:red:PREPARE:  (DELETE.*)\]
+
+mcsre_s:,,inverse:.* (select) .*
+mcsre_s:,,inverse:.* (SELECT) .*
+mcsre_s:,,inverse:.* (update) .*
+mcsre_s:,,inverse:.* (UPDATE) .*
+mcsre_s:,,inverse:.* (insert into) .*
+mcsre_s:,,inverse:.* (INSERT INTO) .*
+mcsre_s:,,inverse:.* (delete from) .*
+mcsre_s:,,inverse:.* (DELETE FROM) .*
+mcsre_s:,,inverse:.* (from) .*
+mcsre_s:,,inverse:.* (FROM) .*
+mcsre_s:,,inverse:.* (where) .*
+mcsre_s:,,inverse:.* (WHERE) .*
+MULTITAILRC
 fi
