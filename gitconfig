@@ -59,7 +59,7 @@
 
     # gitflow helpers
     # hotfix always taken from master!
-    hotfix = !sh -c 'git fetch && git checkout --no-track -b hotfix-$0 origin/master'
+    hotfix = !sh -c 'git fetch && git checkout --no-track -b hotfix/$0 origin/master'
     feature = !sh -c 'git checkout --no-track -b feature/$0 origin/develop'
     # release branch always created from develop!
     prep-release = !sh -c 'git fetch && git checkout --no-track -b release-$0 origin/develop'
