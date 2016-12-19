@@ -30,6 +30,7 @@
     diffw = diff --word-diff
     div = divergence # requires https://raw.githubusercontent.com/garybernhardt/dotfiles/HEAD/bin/git-divergence on PATH
     fa = fetch --all
+    phr = !sh -c 'git log --grep="PHR-$0" --pretty=\"format:%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"'
     la = "!git config -l | grep alias | cut -c 7-"
 
     # logging aliases
@@ -54,6 +55,7 @@
     sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4,5 | xargs git show-branch $(git cb)
     search = !git --no-pager log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" -S
     st = status -s
+    tagv = for-each-ref --sort=taggerdate --format '%(taggerdate:short):   %(tag)'
     url = ls-remote --get-url origin
     week = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" --since='7 days ago' --author='Russell Gray' --author='russgray'
 
@@ -62,7 +64,7 @@
     hotfix = !sh -c 'git fetch && git checkout --no-track -b hotfix/$0 origin/master'
     feature = !sh -c 'git checkout --no-track -b feature/$0 origin/develop'
     # release branch always created from develop!
-    prep-release = !sh -c 'git fetch && git checkout --no-track -b release-$0 origin/develop'
+    prep-release = !sh -c 'git fetch && git checkout --no-track -b release/$0 origin/develop'
     promote = merge --no-ff --edit
 
     # see https://developer.atlassian.com/blog/2015/01/a-better-pull-request/#comment-1811819137
