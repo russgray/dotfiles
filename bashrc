@@ -46,24 +46,25 @@ alias vup='vagrant up && vagrant putty'
 alias vshare='vagrant share --https 443'
 
 
-# https://raw.githubusercontent.com/eliben/code-for-blog/master/2016/persistent-history/add-persistent-history.sh
-log_bash_persistent_history()
-{
-  local rc=$?
-  [[ $(history 1) =~ ^\ *[0-9]+\ +([^\ ]+\ [^\ ]+)\ +(.*)$ ]]
-  local date_part="${BASH_REMATCH[1]}"
-  local command_part="${BASH_REMATCH[2]}"
-  if [ "$command_part" != "$PERSISTENT_HISTORY_LAST" ]
-  then
-    echo $date_part "|" "$command_part" >> ~/.persistent_history
-    export PERSISTENT_HISTORY_LAST="$command_part"
-  fi
-}
+# # https://raw.githubusercontent.com/eliben/code-for-blog/master/2016/persistent-history/add-persistent-history.sh
+# log_bash_persistent_history()
+# {
+#   [[
+#     $(history 1) =~ ^\ *[0-9]+\ +([^\ ]+\ [^\ ]+)\ +(.*)$
+#   ]]
+#   local date_part="${BASH_REMATCH[1]}"
+#   local command_part="${BASH_REMATCH[2]}"
+#   if [ "$command_part" != "$PERSISTENT_HISTORY_LAST" ]
+#   then
+#     echo $date_part "|" "$command_part" >> ~/.persistent_history
+#     export PERSISTENT_HISTORY_LAST="$command_part"
+#   fi
+# }
 
-# Stuff to do on PROMPT_COMMAND
-run_on_prompt_command()
-{
-    log_bash_persistent_history
-}
+# # Stuff to do on PROMPT_COMMAND
+# run_on_prompt_command()
+# {
+#     log_bash_persistent_history
+# }
 
-PROMPT_COMMAND="run_on_prompt_command"
+# PROMPT_COMMAND="run_on_prompt_command"
