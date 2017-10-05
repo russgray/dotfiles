@@ -15,56 +15,85 @@
     renames = copies
     tool = gvimdiff
 [alias]
+    # everyday usage
     aa = "!git add . && git add -u && git status"
-    authors = !git log --pretty=format:%aN | sort | uniq -c | sort -rn
-    bc = branch -a --contains
-    bl = blame -w # git bl path/to/file
     br = branch -v
-    cb = !git branch | grep ^* | cut -d' ' -f2
     ci = commit
     cl = clone
     co = checkout
-    dc = describe --contains
-    dirchurn = diff -C --dirstat=5 --cumulative # e.g. `git dirchurn develop.. src/` for changes in src dir between develop and current branch
     diffc = diff --cached
-    diffw = diff --word-diff
-    div = divergence # requires https://raw.githubusercontent.com/garybernhardt/dotfiles/HEAD/bin/git-divergence on PATH
     fa = fetch --all
-    phr = !sh -c 'git log --grep="PHR-$0" --pretty=\"format:%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"'
-    la = "!git config -l | grep alias | cut -c 7-"
-
-    # logging aliases
     l = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
+    la = "!git config -l | grep alias | cut -c 7- | sort"
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
     ll = log --pretty=format:'%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]' --decorate --numstat
+    me = log --date=relative --pretty=medium --author='Russell Gray' --author='Russ Gray' --author='russgray' --stat
+    pn = push -u origin HEAD
+    s = status
+    search = !git --no-pager log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" -S
+    st = status -s
+
+    # list authors for repo sorted by number of commits    
+    authors = !git log --pretty=format:%aN | sort | uniq -c | sort -rn
+
+    # list branches containing a commit, e.g. git bc ceb4538538
+    bc = branch -a --contains
+
+    # git bl path/to/file
+    bl = blame -w 
+
+    # current branch
+    cb = "!git rev-parse --abbrev-ref HEAD"
+    branch-name = "!git cb"
+
+    # find first tag after a given commit e.g. git dc ceb4538538
+    dc = describe --contains
+
+    # e.g. `git dirchurn develop.. src/` for changes in src dir between develop and current branch
+    dirchurn = diff -C --dirstat=5 --cumulative 
+    diffw = diff --word-diff
+
+    # requires https://raw.githubusercontent.com/garybernhardt/dotfiles/HEAD/bin/git-divergence on PATH
+    div = divergence 
+
+    # find all commits referencing a PHR jira issue, e.g. git phr 3240
+    phr = !sh -c 'git log --grep="PHR-$0" --pretty=\"format:%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"'
+
+    # Given a merge commit, find the span of commits that exist(ed) on that
+    # branch. Used by other aliases.
+    merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
+
+    # show all commits made on a merged branch, excluding merges, e.g. git merge-log 03e648882cee
+    merge-log = "!git log --stat=100 --no-merges `git merge-span .. $1`"
+    # Show the changes that were introduced by a merge, e.g. git merge-diff 03e648882cee
+    merge-diff = "!git diff `git merge-span ... $1`"
 
     # more logging aliases from http://stackoverflow.com/a/22875140
-    #quick look at all repo
+    # quick look at all repo
     loggsa = log --color --date-order --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d %Cgreen(%cr)%Creset' --decorate --simplify-by-decoration --all
-    #quick look at active branch (or refs pointed)
-    loggs  = log --color --date-order --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --decorate --simplify-by-decoration
+    # quick look at active branch (or refs pointed)
+    loggs = log --color --date-order --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --decorate --simplify-by-decoration
 
     # finds merge base from current branch to specified branch, e.g. 'git mb master'
     mb = !git merge-base `git cb`
-    me = log --date=relative --pretty=medium --author='Russell Gray' --author='Russ Gray' --author='russgray' --stat
-    # e.g. git mefile @{4.weeks.ago}.. to view files I've touched in last 4 weeks
-    mefile = "!f() { git log --stat --author='russgray' $1 --no-merges --name-only --pretty=format:'' | sort -u; }; f"
-    pn = push -u origin HEAD
-    req = !sh -c 'CI=$(git merge-base `git cb` $0) && git --no-pager shortlog $CI.. && git --no-pager diff -M --stat --summary $CI'
-    s = status
-    sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4,5 | xargs git show-branch $(git cb)
-    search = !git --no-pager log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" -S
-    st = status -s
+
+    # show state of branch compared to all remotes
+    sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4- | xargs git show-branch $(git cb)
+
+    # list tags with dates
     tagv = for-each-ref --sort=taggerdate --format '%(taggerdate:short):   %(tag)'
+
+    # get url for origin remote
     url = ls-remote --get-url origin
-    week = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\" --since='7 days ago' --author='Russell Gray' --author='russgray'
 
     # gitflow helpers
     # hotfix always taken from master!
     hotfix = !sh -c 'git fetch && git checkout --no-track -b hotfix/$0 origin/master'
+    # feature always taken from develop!
     feature = !sh -c 'git checkout --no-track -b feature/$0 origin/develop'
     # release branch always created from develop!
     prep-release = !sh -c 'git fetch && git checkout --no-track -b release/$0 origin/develop'
+    # run on develop to accept a feature, e.g. git promote feature/my_cool_new_thing
     promote = merge --no-ff --edit
 
     # see https://developer.atlassian.com/blog/2015/01/a-better-pull-request/#comment-1811819137
@@ -74,6 +103,15 @@
     preview-merge = !sh -c 'git merge-tree $(git merge-base $0 $1) $0 $1'
     # shortcut for previewing a merge to master
     pm = !git fetch && git preview-merge origin/master HEAD
+
+    # Mark a file as "assume unchanged", which means that Git will treat it
+    # as though there are no changes to it even if there are. Useful for
+    # temporary changes to tracked files
+    assume = update-index --assume-unchanged
+    # Reverse the above
+    unassume = update-index --no-assume-unchanged
+    # Show the files that are currently assume-unchanged
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
 
 [mergetool]
     keepBackup = false
