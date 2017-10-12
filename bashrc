@@ -30,7 +30,7 @@ alias da='date "+%Y-%m-%d %A    %T %Z"'
 alias hist='history | grep $1'                          # requires an argument
 alias grso='git remote show origin'
 alias grpo='git remote prune origin'
-alias gpl='git branch --merged develop | grep -v develop | xargs --no-run-if-empty git branch -d' # prune local branches that have been merged to develop
+alias gpl='git branch --merged origin/develop | grep -v develop | xargs --no-run-if-empty git branch -d' # prune local branches that have been merged to develop
 alias pcat='pygmentize -O style=native -g'
 alias ll='ls -Al'
 alias serve='python -m SimpleHTTPServer'
